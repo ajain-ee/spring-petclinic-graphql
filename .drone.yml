@@ -6,7 +6,8 @@ steps:
   - name: backend-test
     image: openjdk:8u272-jdk
     commands:
-    - cd backend && ./mvnw clean test
+#    - cd backend && ./mvnw clean test
+    - make backend-test
 
 #  trigger:
 #    branch:
