@@ -1,13 +1,12 @@
 kind: pipeline
 type: docker
-name: petclinic-graphql-backend
+name: petclinic-frontend
 
 steps:
-  - name: backend-test
-    image: openjdk:8u272-jdk
+  - name: test
+    image: node
     commands:
-#    - cd backend && ./mvnw clean test
-    - make backend-test
+      - cd frontend && npm run test
 
 #  trigger:
 #    branch:
@@ -18,16 +17,17 @@ steps:
 ---
 kind: pipeline
 type: docker
-name: petclinic-graphql-frontend
+name: petclinic-backend
 
 steps:
-  - name: backend-test
-    image: node
+  - name: test
+    image: openjdk:8u272-jdk
     commands:
-    - cd frontend && npm run test
+    - cd backend && ./mvnw clean test
 
 #  trigger:
 #    branch:
 #      - master
 #    event:
 #      - push
+
