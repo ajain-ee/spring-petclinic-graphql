@@ -3,10 +3,11 @@ type: docker
 name: petclinic-frontend
 
 steps:
-  - name: test
-    image: node
+  - name: build&test
+    image: node:10.23-alpine
     commands:
-      - cd frontend && npm run test
+      - cd frontend && yarn install && yarn test
+      - yarn run dist
 #    trigger:
 #      branch:
 #        - master
