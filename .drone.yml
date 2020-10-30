@@ -2,17 +2,9 @@ kind: pipeline
 type: docker
 name: petclinic-frontend
 
-volumes:
-  - name: cache
-    host:
-      path: /tmp/cache
-
 steps:
   - name: test
     image: node:10.23-alpine
-    volumes:
-      - name: cache
-        path: /tmp/cache
     commands:
       - cd frontend && yarn install && yarn test
 
@@ -46,12 +38,6 @@ steps:
 kind: pipeline
 type: docker
 name: petclinic-backend
-
-volumes:
-  - name: cache
-    host:
-      path: /tmp/cache
-
 
 steps:
   - name: test
