@@ -1,3 +1,5 @@
+[![Build Status](https://cloud.drone.io/api/badges/ajain-ee/spring-petclinic-graphql/status.svg)](https://cloud.drone.io/ajain-ee/spring-petclinic-graphql)
+
 # GraphQL version of Spring PetClinic Sample Application
 
 This is a [GraphQL API](http://graphql.org/) version of the Spring PetClinic Application. It consists of two parts:

@@ -3,24 +3,20 @@ type: docker
 name: petclinic-frontend
 
 steps:
-  - name: build&test
+  - name: test
     image: node:10.23-alpine
     volumes:
       - name: dist
         path: /app/frontend/dist
     commands:
       - cd frontend && yarn install && yarn test
-      - yarn run dist
+
+  - name: package
+    image: node:10.23-alpine
+    commands:
+      - cd frontend && yarn install && yarn run dist
       - cp -r public/ /app/frontend/dist/
 
-
-  - name: volume sharing check
-    image: alpine:latest
-    volumes:
-      - name: dist
-        path: /app/frontend/dist
-    commands:
-      - ls -al /app/frontend/dist
 #    trigger:
 #      branch:
 #        - master
@@ -45,9 +41,6 @@ steps:
 
 #  deploy to k8
 
-volumes:
-  - name: dist
-    temp: {}
 
 
 ---
@@ -61,25 +54,25 @@ steps:
     commands:
     - cd backend && ./mvnw clean test
 
-#  trigger:
-#    branch:
-#      - master
-#    event:
-#      - push
+  - name: package
+    image: openjdk:8u272-jdk
+    commands:
+      - cd backend && ./mvnw clean package
 
-#  - name: publish
-#    image: plugins/ecr
-#    settings:
-#      access_key:
-#        from_secret: aws_access_key_id
-#      secret_key:
-#        from_secret: aws_secret_access_key
-#      create_repository: true
-#      repo: bar
-#      registry: <account_id>.dkr.ecr.us-east-1.amazonaws.com
-#      dockerfile: path/to/Dockerfile
-#      tags:
-#        - latest
+  - name: publish
+    image: plugins/ecr
+    settings:
+      access_key:
+        from_secret: aws_access_key_id
+      secret_key:
+        from_secret: aws_secret_access_key
+      create_repository: true
+      repo: harness-petclinic-backend
+      registry: 038062473746.dkr.ecr.us-east-1.amazonaws.com
+      dockerfile: backend/Dockerfile
+      tags:
+        - latest
+
 
 
 #  deploy to k8
