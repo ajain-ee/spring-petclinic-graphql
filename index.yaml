@@ -3,11 +3,21 @@ entries:
   harness-petclinic-backend:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2020-11-03T23:53:01.186459+05:30"
+    created: "2020-11-04T00:08:17.435388+05:30"
     description: A Helm chart for Kubernetes
     digest: de72b811d344362d7337193a4baaede787720bf3e4a497e2ed809d183f84ca3a
     name: harness-petclinic-backend
     urls:
-    - harness-petclinic-backend-0.1.0.tgz
+    - https://github.com/ajain-ee/spring-petclinic-graphql.git/harness-petclinic-backend-0.1.0.tgz
     version: 0.1.0
-generated: "2020-11-03T23:53:01.184068+05:30"
+  harness-petclinic-frontend:
+  - apiVersion: v1
+    appVersion: "1.0"
+    created: "2020-11-04T00:08:17.435706+05:30"
+    description: A Helm chart for Kubernetes
+    digest: 4f8a09b315ce3e01605f94510be3a372c2c274dcbc4a5010f8109c44cc13fb23
+    name: harness-petclinic-frontend
+    urls:
+    - https://github.com/ajain-ee/spring-petclinic-graphql.git/harness-petclinic-frontend-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-11-04T00:08:17.434885+05:30"
