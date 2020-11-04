@@ -1,8 +1,42 @@
+global-variables:
+  - &default_cache_settings
+    image: drillster/drone-volume-cache
+    settings:
+    volumes:
+      - name: cache
+        path: /cache
+    when:
+      ref:
+        include:
+          - refs/heads/feature/*
+          - refs/heads/master
+          - refs/heads/dev
+          - refs/tags/*
+      event:
+        include:
+          - push
+          - pull_request
+          - tag
+
+
+
 kind: pipeline
 type: docker
 name: petclinic-frontend
 
+volumes:
+  - name: cache
+    host:
+      path: /tmp/cache
+
 steps:
+  - name: restore-cache
+    <<: *default_cache_settings
+    settings:
+      restore: true
+      mount:
+        - ./docker
+
   - name: test
     image: node:10.23-alpine
     commands:
@@ -27,17 +61,32 @@ steps:
       tags:
         - latest
 
-
-#  deploy to k8
-
-
+  - name: rebuild-cache
+    <<: *default_cache_settings
+    settings:
+      rebuild: true
+      mount:
+        - ./docker
 
 ---
 kind: pipeline
 type: docker
 name: petclinic-backend
 
+volumes:
+  - name: cache
+    host:
+      path: /tmp/cache
+
 steps:
+  - name: restore-cache
+    <<: *default_cache_settings
+    settings:
+      restore: true
+      mount:
+        - ./docker
+        - ./.m2
+
   - name: test
     image: openjdk:8u272-jdk
     commands:
@@ -62,6 +111,10 @@ steps:
       tags:
         - latest
 
+  - name: rebuild-cache
+    <<: *default_cache_settings
+    settings:
+      rebuild: true
+      mount:
+        - ./docker
 
-
-#  deploy to k8
