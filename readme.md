@@ -18,7 +18,7 @@ https://github.com/spring-petclinic/spring-petclinic-rest. Instead of the
 a `org.springframework.samples.petclinic.graphql` package that contains
 the resolvers for the GraphQL API.
 
-### GraphQL Java implementation
+#### GraphQL Java implementation
 
 GraphQL frameworks used in this example:
  
