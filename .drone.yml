@@ -26,7 +26,8 @@ name: petclinic-frontend
 
 volumes:
   - name: cache
-    temp: /var/lib/cache
+    host:
+      path: /var/lib/cache
 
 steps:
 #  - name: restore-cache
