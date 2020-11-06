@@ -40,7 +40,7 @@ steps:
     image: node:10.23-alpine
     volumes:
       - name: cache
-        path: frontend/node_modules
+        path: /temp/cache
     commands:
       - cd frontend && yarn install && yarn test
 
@@ -48,8 +48,11 @@ steps:
     image: node:10.23-alpine
     volumes:
       - name: cache
-        path: frontend/node_modules
+        path: /temp/cache
     commands:
+      - ls /temp/cache
+      - mkdir frontend/node_modules
+      - cp -r /temp/cache frontend/node_modules
       - cd frontend && yarn install && yarn run dist
 
   - name: publish
