@@ -26,9 +26,9 @@ name: petclinic-frontend
 
 volumes:
   - name: m2
-    temp: {}
+    temp: /temp/cache/m2
   - name: node-modules
-    temp: {}
+    temp: /temp/cache/node-modules
 
 steps:
 #  - name: restore-cache
@@ -42,17 +42,23 @@ steps:
     image: node:10.23-alpine
     volumes:
       - name: node-modules
-        path: frontend/node_modules
+        path: /tmp/cache
     commands:
+      - ls -a /temp/cache
+      - cp -r /temp/cache frontend
       - cd frontend && yarn install && yarn test
+      - cp -r node_modules /temp/cache
 
   - name: package
     image: node:10.23-alpine
     volumes:
       - name: node-modules
-        path: frontend/node_modules
+        path: /tmp/cache
     commands:
+      - ls -a /temp/cache
+      - cp -r /temp/cache frontend
       - cd frontend && yarn install && yarn run dist
+      - cp -r node_modules /temp/cache
 
   - name: publish
     image: plugins/ecr
