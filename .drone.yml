@@ -26,9 +26,9 @@ name: petclinic-frontend
 
 volumes:
   - name: m2
-    temp: /temp/cache/m2
+    temp: /temp/cache
   - name: node-modules
-    temp: /temp/cache/node-modules
+    temp: /temp/cache
 
 steps:
 #  - name: restore-cache
