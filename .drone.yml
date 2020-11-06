@@ -24,6 +24,10 @@ kind: pipeline
 type: docker
 name: petclinic-frontend
 
+volumes:
+  - name: cache
+    temp: {}
+
 steps:
 #  - name: restore-cache
 #    <<: *default_cache_settings
@@ -34,11 +38,17 @@ steps:
 
   - name: test
     image: node:10.23-alpine
+    volumes:
+      - name: cache
+        path: frontend/node_modules
     commands:
       - cd frontend && yarn install && yarn test
 
   - name: package
     image: node:10.23-alpine
+    volumes:
+      - name: cache
+        path: frontend/node_modules
     commands:
       - cd frontend && yarn install && yarn run dist
 
@@ -91,8 +101,7 @@ name: petclinic-backend
 
 volumes:
   - name: cache
-    host:
-      path: /var/lib/cache
+    temp: {}
 
 steps:
 #  - name: restore-cache
